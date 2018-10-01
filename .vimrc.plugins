@@ -3,7 +3,7 @@ Plugin "gmarik/vundle"
 " ==============================================
 " Define Plugins via Github repos
 Plugin "christoomey/vim-run-interactive"
-Plugin "Valloric/YouCompleteMe" "这个插件自己测试会卡,不知道是不是下载东西太多
+Plugin "Valloric/YouCompleteMe" "这个插件下载东西太多,看起来像卡住了，需耐心等待,https://github.com/VundleVim/Vundle.vim/issues/744
 Plugin "croaky/vim-colors-github"
 Plugin "danro/rename.vim"
 Plugin "majutsushi/tagbar"

@@ -12,5 +12,10 @@ then
 #    echo "$vimrc isn't exist!";
 fi
 echo "copy .vimrc2 to ~/.vimrc"
+if [ -e $vimplugin/vundle ];
+then
+    echo "romove derecotry ${vimplugin}/vundle"
+    rm -rdf $vimplugin/vundle;
+fi
 cp -p ./.vimrc2 $vimrc
 vim

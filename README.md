@@ -1,9 +1,9 @@
 # vimconfig
 #### vim 配置
-clone本项目到本地，执行脚本[auto_config.sh]()可以自动配置，配置之前可以修改 .vimrc.plugins 文件，配置自己想安装插件
-##### 执行脚本[auto_config2.sh]()自动配置更加方便
+clone本项目到本地，执行脚本[auto_config.sh](https://github.com/TungYe/vimconfig/blob/master/auto_config.sh)可以自动配置，配置之前可以修改 .vimrc.plugins 文件，配置自己想安装插件
+##### 执行脚本[auto_config2.sh](https://github.com/TungYe/vimconfig/blob/master/auto_config2.sh)自动配置更加方便
 #### 插件管理 [Vundle](https://github.com/VundleVim/Vundle.vim)介绍
-#### 第1步 在用户目录下创建vim的配置文件 ~/.vimrc,具体内容查看文件[.vimrc]()
+#### 第1步 在用户目录下创建vim的配置文件 ~/.vimrc,具体内容查看文件[.vimrc](https://github.com/TungYe/vimconfig/blob/master/.vimrc)
 ```
 # touch ~/.vimrc
 ```
@@ -13,7 +13,7 @@ clone本项目到本地，执行脚本[auto_config.sh]()可以自动配置�
 # mkdir ~/.vim/plugins
 ```
 
-#### 第3步 创建要安装的vim插件列表文件 ~/.vimrc.plugins,具体内容查看文件[.vimrc.plugins]()
+#### 第3步 创建要安装的vim插件列表文件 ~/.vimrc.plugins,具体内容查看文件[.vimrc.plugins](https://github.com/TungYe/vimconfig/blob/master/.vimrc.plugins)
 ```
 # touch ~/.vimrc.plugins
 ```
