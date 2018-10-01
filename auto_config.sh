@@ -19,23 +19,26 @@ mkdir -p $vimplugin
 echo "copy .vimrc.plugins to ~/.vimrc.plugins"
 # cp ./.vimrc.plugins $vimrc
 
-echo "download molokai colorscheme"
-git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-git clone https://github.com/tomasr/molokai ~/.vim/molokai
-cp -r ~/.vim/molokai/colors ~/.vim/
+if [ ! -e ~/.vim/molokai/colors ];
+then
+    if [ ! -e ~/.vim/molokai ];
+    then
+        echo "download molokai colorscheme"
+        git clone https://github.com/tomasr/molokai ~/.vim/molokai;
+    fi
+    cp -r ~/.vim/molokai/colors ~/.vim/;
+fi
 
-echo "start downloading vundle..."
+echo "start download vundle..."
 echo "downloading vundle..."
 #git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-echo "finish downloading vundle"
+git clone https://github.com/gmarik/vundle $vimplugin/vundle
+echo "finish download vundle"
 
 echo "install plugins"
 vim +PluginInstall +qall
-echo "install plugins over"
 echo -e "\033[33mif you force to abort the install plugins process,\nThose plugins probaley was’t installed completely! \033[0m"
 echo "please execute following command reinstall plugins"
 echo -e "\033[31m vim +PluginInstall +qall \033[0m"
 
-echo "vim config over！"
+echo "vim config over!"

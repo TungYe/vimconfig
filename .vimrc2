@@ -12,10 +12,10 @@ if !filereadable(vundle_readme)
     " silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
     " silent !git clone https://github.com/tomasr/molokai ~/.vim/molokai
     " silent !cp -r ~/.vim/molokai/colors ~/.vim/
-    !mkdir -p ~/.vim/bundle
-    !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-    !git clone https://github.com/tomasr/molokai ~/.vim/molokai
-    !cp -r ~/.vim/molokai/colors ~/.vim/
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    silent !git clone https://github.com/tomasr/molokai ~/.vim/molokai
+    silent !cp -r ~/.vim/molokai/colors ~/.vim/
     let iCanHazVundle=0
 endif
 set rtp+=~/.vim/bundle/vundle/
@@ -24,7 +24,6 @@ call vundle#rc()
 " required!
 Plugin 'gmarik/vundle'
 
-" Define Plugins via Github repos
 Plugin 'christoomey/vim-run-interactive'
 Plugin 'croaky/vim-colors-github'
 Plugin 'danro/rename.vim'
@@ -55,11 +54,11 @@ Plugin 'othree/html5.vim'
 Plugin 'xsbeats/vim-blade'
 Plugin 'Raimondi/delimitMate'
 Plugin 'groenewege/vim-less'
-" Plugin 'evanmiller/nginx-vim-syntax'
+Plugin 'evanmiller/nginx-vim-syntax'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tomasr/molokai'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'klen/python-mode'
+" Plugin 'klen/python-mode'
+" Plugin 'Valloric/YouCompleteMe' "这个插件下载东西太多,看起来像卡住了，需耐心等待,https://github.com/VundleVim/Vundle.vim/issues/744
 
 if iCanHazVundle == 0
     echo "Installing Plugins, please ignore key map error messages"

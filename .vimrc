@@ -1,208 +1,216 @@
-" 131102: for vundle
-" http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
-" Setting up Vundle - the vim plugin bundler
-set nocompatible " be iMproved
-filetype off " required!
-let iCanHazVundle=1
-let vundle_readme=expand("~/.vim/bundle/vundle/README.md")
-if !filereadable(vundle_readme)
-    echo "Installing Vundle.."
-    echo ""
-    silent !mkdir -p ~/.vim/bundle
-    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-    let iCanHazVundle=0
+" Use Vim settings, rather then Vi settings. This setting must be as early as
+" possible, as it has side effects.
+set nocompatible
+
+" Highlight current line
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+set cursorline cursorcolumn
+
+" Leader
+let mapleader = ","
+
+set backspace=2   " Backspace deletes like most programs in insert mode
+set nobackup
+set nowritebackup
+set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set history=50
+set ruler         " show the cursor position all the time
+set showcmd       " display incomplete commands
+set incsearch     " do incremental searching
+set laststatus=2  " Always display the status line
+set autowrite     " Automatically :write before running commands
+set confirm       " Need confrimation while exit
+set fileencodings=utf-8,gb18030,gbk,big5
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+  syntax on
 endif
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" let Vundle manage Vundle
-" required!
-Plugin 'gmarik/vundle'
 
-" General Vim
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'scrooloose/nerdtree'
-Plugin 'loremipsum'
-Plugin 'tpope/vim-surround'
-" 'L9' is for 'FuzzyFinder'.
-Plugin 'L9'
-Plugin 'FuzzyFinder'
-" 140130
-Plugin 'DrawIt'
-" 140201
-Plugin 'tpope/vim-repeat'
-Plugin 'ingo-library'
-Plugin 'visualrepeat'
-Plugin 'junegunn/vim-easy-align'
-
-" For SnipMate
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-" Optional:
-Plugin 'honza/vim-snippets'
-
-" C/C++
-Plugin 'taglist.vim'
-Plugin 'Rip-Rip/clang_complete'
-Plugin 'brookhong/cscope.vim'
-Plugin 'a.vim'
-
-" 140130: Gist
-Plugin 'mattn/webapi-vim'
-Plugin 'mattn/gist-vim'
-
-" 140204: Markdown
-Plugin 'plasticboy/vim-markdown'
-
-" 140216: Git
-Plugin 'tpope/vim-fugitive'
-
-" 150213: Vim-LaTeX
-Plugin 'vim-latex/vim-latex'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'tpope/vim-unimpaired'
-"Plugin 'matchit.zip' " Avoid possible confusion
-Plugin 'kana/vim-textobj-user' " Installed for dependency
-Plugin 'kana/vim-textobj-lastpat' " Practical Vim Tip 84
-Plugin 'bronson/vim-visual-star-search' " Practical Vim Tip 86
-Plugin 'tangledhelix/vim-octopress'
-
-if iCanHazVundle == 0
-    echo "Installing Plugins, please ignore key map error messages"
-    echo ""
-    :PluginInstall
+if filereadable(expand("~/.vimrc.plugins"))
+  source ~/.vimrc.plugins
 endif
+
 filetype plugin indent on
-" Setting up Vundle - the vim plugin bundler end
 
-" General settings
-"set nocompatible
-set hlsearch " highlight search (Tip 50 in Practical Vim)
-set incsearch " incremental search
-set ignorecase smartcase " 140203: see usr_27.txt
-"set linebreak " for soft word wrap
-set smartindent
-set expandtab " use whitespaces instead of tabs
-set shiftwidth=4 " indent 4 space char
-set tabstop=8
-set softtabstop=4 " indent 4 space char
-set textwidth=70
-set encoding=utf-8
-set history=200 " memory has become much cheaper
+augroup vimrcEx
+  autocmd!
 
-augroup textCompletion
-  au!
-  au Filetype html,mkd,markdown,text inoremap <buffer> (     ()<++><Left><Left><Left><Left><Left>
-  au Filetype html,mkd,markdown,text inoremap <buffer> ((    (
-  au Filetype html,mkd,markdown,text inoremap <buffer> ()    ()<++><Left><Left><Left><Left><Left>
-  au Filetype html,mkd,markdown,text inoremap <buffer> [     []<++><Left><Left><Left><Left><Left>
-  au Filetype html,mkd,markdown,text inoremap <buffer> [[    [
-  au Filetype html,mkd,markdown,text inoremap <buffer> []    []<++><Left><Left><Left><Left><Left>
-  au Filetype html,mkd,markdown,text inoremap <buffer> {     {}<++><Left><Left><Left><Left><Left>
-  au Filetype html,mkd,markdown,text inoremap <buffer> {{    {
-  au Filetype html,mkd,markdown,text inoremap <buffer> {}    {}<++><Left><Left><Left><Left><Left>
-  au Filetype html,mkd,markdown,text inoremap <buffer> ''    ''<++><Left><Left><Left><Left><Left>
-  au Filetype html,mkd,markdown,text inoremap <buffer> ""    ""<++><Left><Left><Left><Left><Left>
-  au Filetype html,mkd,markdown,text inoremap <buffer> <     <<Left><Right>><++><Left><Left><Left><Left><Left>
-  au Filetype html,mkd,markdown,text inoremap <buffer> <<    <
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
 
-  au Filetype mkd,markdown inoremap <buffer> ``    ``<++><Left><Left><Left><Left><Left>
-  au Filetype mkd,markdown inoremap <buffer> **    **<++><Left><Left><Left><Left><Left>
+  " Cucumber navigation commands
+  autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
+  autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=routes
+
+  " Set syntax highlighting for specific file types
+  autocmd BufRead,BufNewFile Appraisals set filetype=ruby
+  autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+  " Enable spellchecking for Markdown
+  autocmd FileType markdown setlocal spell
+
+  " Automatically wrap at 80 characters for Markdown
+  autocmd BufRead,BufNewFile *.md setlocal textwidth=80
 augroup END
 
-augroup specIndent
-  au!
-  au Filetype tex,mkd,markdown,css,scss,html,javascript,vim setlocal shiftwidth=2
-augroup END
+" Softtabs, 2 spaces
+set tabstop=2
+set shiftwidth=2
+set shiftround
+set expandtab
 
-" 131211
-nnoremap <F3> :NERDTreeToggle<CR>
-set pastetoggle=<F5> " Practical Vim Tip 63
-nnoremap <F12> :TlistToggle<CR>
-" Press Space to turn off highlighting and clear any message already displayed.
-nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+" Display extra whitespace
+set list listchars=tab:»·,trail:·
 
-" Practical Vim Tip 34: Avoid cursors when rcl'g cmd from hist
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
 
-" C/C++ settings
-" 131214:
-" http://blog.wuwon.id.au/2011/10/vim-plugin-for-navigating-c-with.html
-let g:clang_auto_select=1
-let g:clang_complete_auto=0
-let g:clang_complete_copen=1
-let g:clang_hl_errors=1
-let g:clang_periodic_quickfix=0
-let g:clang_snippets=1
-let g:clang_snippets_engine="clang_complete"
-let g:clang_conceal_snippets=1
-let g:clang_exec="clang"
-let g:clang_user_options=""
-let g:clang_auto_user_options="path, .clang_complete"
-let g:clang_use_library=1
-let g:clang_library_path="/usr/lib/"
-let g:clang_sort_algo="priority"
-let g:clang_complete_macros=1
-let g:clang_complete_patterns=0
-let g:clang_debug=1
-nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
-" C/C++ settings end
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
-" LaTeX-Suite settings start
-" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-"filetype plugin on
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 
-" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
-" can be called correctly.
-set shellslash
+" Color scheme
+colorscheme molokai
+highlight NonText guibg=#060606
+highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
+" Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
 
-" OPTIONAL: This enables automatic indentation as you type.
-"filetype indent on
+" Numbers
+set number
+set numberwidth=5
 
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
+" Tab completion
+" will insert tab at beginning of line,
+" will use completion if not at beginning
+set wildmode=list:longest,list:full
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <S-Tab> <c-n>
 
-let g:Tex_DefaultTargetFormat='pdf' " for beamer/word count/xelatex
-"let g:Tex_CompileRule_pdf='pdflatex --shell-escape -interaction=nonstopmode $*'
-let g:Tex_CompileRule_pdf='xelatex -interaction=nonstopmode $*'
-" 140713: TikZ pattern fill doesn't support XeLaTeX well, so switch
-" back to pdflatex
-"let g:Tex_CompileRule_pdf='pdflatex -interaction=nonstopmode $*'
-let g:Tex_MultipleCompileFormats='dvi,pdf'
+" Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
+let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 
-" Set file and display encodings into UTF-8
-" 131214: do them in modeline, which is specific to file and independent of system
-"set fileencoding=utf-8
-"set encoding=utf-8
-" LaTeX-Suite settings end
+" Index ctags from any project, including those outside Rails
+map <Leader>ct :!ctags -R .<CR>
 
-" Gist settings start
-let g:gist_get_multiplefile = 1
-" Gist settings end
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
 
-" Vim-easy-align settings start
-" 140201: From the official 1-min guide
-" Start interactive EasyAlign in visual mode
-vmap <Enter> <Plug>(EasyAlign)
+" Get off my lawn
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
 
-" Start interactive EasyAlign with a Vim movement
-nmap <Leader>a <Plug>(EasyAlign)
-" Vim-easy-align settings end
+" vim-rspec mappings
+nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
+nnoremap <Leader>s :call RunNearestSpec()<CR>
+nnoremap <Leader>l :call RunLastSpec()<CR>
 
-" Vim Tmux Navigator settings start
-let g:tmux_navigator_no_mappings = 1
+" Run commands that require an interactive shell
+nnoremap <Leader>r :RunInInteractiveShell<space>
 
-nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
-nnoremap <silent> <C-j> :TmuxNavigateDown<CR>
-nnoremap <silent> <C-k> :TmuxNavigateUp<CR>
-nnoremap <silent> <C-l> :TmuxNavigateRight<CR>
-nnoremap <silent> <C-\> :TmuxNavigatePrevious<CR>
-" Vim Tmux Navigator settings end
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" configure syntastic syntax checking to check on open as well as save
+let g:syntastic_check_on_open=1
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+
+autocmd Syntax javascript set syntax=jquery " JQuery syntax support
+
+set matchpairs+=<:>
+set statusline+=%{fugitive#statusline()} "  Git Hotness
+
+" Nerd Tree
+let NERDChristmasTree=0
+let NERDTreeWinSize=40
+let NERDTreeChDirMode=2
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+let NERDTreeShowBookmarks=1
+let NERDTreeWinPos="left"
+autocmd vimenter * if !argc() | NERDTree | endif " Automatically open a NERDTree if no files where specified
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif " Close vim if the only window left open is a NERDTree
+nmap <F5> :NERDTreeToggle<cr>
+
+" Tagbar
+let g:tagbar_width=35
+let g:tagbar_autofocus=1
+nmap <F6> :TagbarToggle<CR>
+
+" Emmet
+let g:user_emmet_mode='i' " enable for insert mode
+
+" Search results high light
+set hlsearch
+
+" nohlsearch shortcut
+nmap -hl :nohlsearch<cr>
+nmap +hl :set hlsearch<cr>
+
+" Javascript syntax hightlight
+syntax enable
+
+" YouCompleteMe
+let g:ycm_autoclose_preview_window_after_completion=1
+nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" ctrlp
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux"
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+
+set laststatus=2 " Always display the status line
+set statusline+=%{fugitive#statusline()} "  Git Hotness
+
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+
+" RSpec.vim mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+
+" Vim-instant-markdown doesn't work in zsh
+set shell=bash\ -i
+
+" Snippets author
+let g:snips_author = 'Yuez'
+
+" Local config
+if filereadable($HOME . "/.vimrc.local")
+  source ~/.vimrc.local
+endif
