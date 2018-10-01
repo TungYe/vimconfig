@@ -1,7 +1,6 @@
 # vimconfig
 #### vim 配置
 clone本项目到本地，执行脚本[auto_config.sh](https://github.com/TungYe/vimconfig/blob/master/auto_config.sh)可以自动配置，配置之前可以修改 .vimrc.plugins文件，配置自己想安装插件
-##### 执行脚本[auto_config2.sh](https://github.com/TungYe/vimconfig/blob/master/auto_config2.sh)自动配置更加方便
 #### 插件管理 [Vundle](https://github.com/VundleVim/Vundle.vim)介绍
 #### 在用户目录下创建vim的配置文件 ~/.vimrc,具体内容查看文件[.vimrc](https://github.com/TungYe/vimconfig/blob/master/.vimrc)
 ```
